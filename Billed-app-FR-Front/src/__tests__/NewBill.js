@@ -179,7 +179,7 @@ describe("Given I am connected as Employee on NewBill page, and submit the form"
         mockStore.bills.mockImplementationOnce(() => {
           return {
             update: () => {
-              return Promise.reject(new Error("Erreur"));
+              return Promise.reject(new Error("Erreur 404"));
             },
           };
         });

@@ -24,7 +24,17 @@ export default class NewBill {
 
     const file = this.document.querySelector(`input[data-testid="file"]`)
       .files[0];
-    console.log(file);
+    //console.log(file);
+
+    const filePath = e.target.value.split(/\\/g);
+    const fileName = filePath[filePath.length - 1];
+    const formData = new FormData();
+    // console.log(formData);
+
+    const email = JSON.parse(localStorage.getItem("user")).email;
+    formData.append("file", file);
+    formData.append("email", email);
+
     /**
      * ------------------Bug 3--------------------
      * ajout condition  si extension jpg,jpeg ou png
@@ -39,16 +49,6 @@ export default class NewBill {
       /**
        * ----------------------------------------------------
        */
-
-      const filePath = e.target.value.split(/\\/g);
-      const fileName = filePath[filePath.length - 1];
-      const formData = new FormData();
-      console.log(formData);
-
-      const email = JSON.parse(localStorage.getItem("user")).email;
-      formData.append("file", file);
-      formData.append("email", email);
-
       this.store
         .bills()
         .create({
@@ -69,6 +69,7 @@ export default class NewBill {
        * affichage message erreur si le fichier n'est pas au bon format
        */
     } else {
+      e.target.value = "";
       errorMessage.classList.remove("hidden");
     }
   };
